@@ -24,9 +24,9 @@
         <attribute name="src" base64Decoding="true">
             <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
         </attribute>
-        <attribute name="style" disable="true" exceptionTagList="iframe,a"></attribute>
+        <attribute name="style" disable="false" exceptionTagList="iframe,a"></attribute>
         <attribute name="href">
-			<allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+		    <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
         </attribute>
         <attribute name="formaction" disable="true"/>
         <!-- for youtube -->
