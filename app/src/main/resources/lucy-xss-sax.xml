@@ -2,7 +2,7 @@
 <config xmlns="http://www.nhncorp.com/lucy-xss" extends="lucy-xss-default-sax.xml">
 
     <elementRule>
-        <element name="embed" disable="false"/>
+        <element name="embed" disable="true"/>
         <element name="iframe" disable="false"/>
         <element name="object" disable="true"/>
         <element name="body" disable="true"/>
@@ -19,12 +19,12 @@
     
     <attributeRule>
         <attribute name="data" base64Decoding="true">
-            <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+            <allowedPattern><![CDATA[(?i:^['"]?\s*https://www.youtube.com.*)]]></allowedPattern>
         </attribute>
         <attribute name="src" base64Decoding="true">
-            <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+            <allowedPattern><![CDATA[(?i:^['"]?\s*https://www.youtube.com.*)]]></allowedPattern>
         </attribute>
-        <attribute name="style" disable="false" exceptionTagList="iframe,a"></attribute>
+        <attribute name="style" exceptionTagList="iframe,a"></attribute>
         <attribute name="href">
 		    <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
         </attribute>
