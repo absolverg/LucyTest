@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns="http://www.nhncorp.com/lucy-xss" extends="lucy-xss-default-sax.xml">
+
+    <elementRule>
+        <element name="embed" disable="false"/>
+        <element name="iframe" disable="false"/>
+        <element name="object" disable="true"/>
+        <element name="body" disable="true"/>
+        <element name="meta" disable="true"/>
+        <element name="script" disable="true"/>
+        <element name="style" disable="true"/>
+        <element name="link" disable="true"/>
+        <element name="base" disable="true"/>
+        <element name="applet" disable="true"/>
+        <element name="bgsound" disable="true"/>
+        <element name="title" disable="true"/>
+        <element name="html" disable="true"/>
+    </elementRule>
+    
+    <attributeRule>
+        <attribute name="data" base64Decoding="true">
+            <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+        </attribute>
+        <attribute name="src" base64Decoding="true">
+            <allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+        </attribute>
+        <attribute name="style" disable="true" exceptionTagList="iframe,a"></attribute>
+        <attribute name="href">
+			<allowedPattern><![CDATA[(?i:^['"]?\s*https://.*)]]></allowedPattern>
+        </attribute>
+        <attribute name="formaction" disable="true"/>
+        <!-- for youtube -->
+        <attribute name="allow"></attribute>
+        <attribute name="allowfullscreen"></attribute>
+    </attributeRule>
+
+</config>
