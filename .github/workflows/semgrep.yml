@@ -28,3 +28,4 @@ jobs:
       - run: semgrep ci
         env:
           SEMGREP_RULES: p/default
+          SEMGREP_BASELINE_REF: master
