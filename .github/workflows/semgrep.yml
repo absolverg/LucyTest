@@ -13,8 +13,7 @@ name: Semgrep
 on:
   pull_request:
     types: ["opened", "reopened"]
-  push:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   semgrep:
