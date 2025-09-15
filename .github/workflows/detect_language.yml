@@ -18,12 +18,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-
-            let configFile = 'semgrep_rules.yaml'; // 기본값 (모든 언어 룰셋)
-            if (languages['Python']) {
-              configFile = 'semgrep_rules_python.yaml';
-            }
-            // 다른 언어에 대한 규칙 파일도 여기에 추가 가능
             
-            console.log(`Detected language and using config file: ${configFile}`);
-            core.setOutput('config_file', configFile);
+            console.log(`Detected language and using config file: ${languages}`);
