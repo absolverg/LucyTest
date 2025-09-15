@@ -5,7 +5,7 @@ on:
 
 jobs:
   detect_language:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
 
     steps:
       - name: Detect repository language and set config file
