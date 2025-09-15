@@ -1,0 +1,22 @@
+name: List Languages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  detect_language:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Detect repository language and set config file
+        id: set_config
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: languages } = await github.rest.repos.listLanguages({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            
+            console.log(`Detected language and using config file: ${languages}`);
