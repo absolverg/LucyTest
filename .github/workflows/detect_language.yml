@@ -19,6 +19,9 @@ jobs:
               repo: context.repo.repo,
             });
 
-            for (const item of languages) {
-              console.log(item)
-            }
+            console.log("=== Repository Languages ===");
+            console.log(languages);
+
+            // 키만 출력 (언어 이름들)
+            const langs = Object.keys(languages);
+            console.log("Languages detected:", langs.join(", "));
