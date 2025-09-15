@@ -18,5 +18,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            
-            console.log(`Detected language and using config file: ${languages}`);
+
+            for (const item of languages) {
+              console.log(item)
+            }
