@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Detect repository language and set config file
         id: set_config
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -21,15 +21,15 @@ jobs:
 
             // Semgrep 규칙과 GitHub 언어 매핑
             const languageMap = {
-              'Java': 'java',
-              'Python': 'python',
-              'JavaScript': 'javascript',
-              'TypeScript': 'typescript',
-              'Go': 'go',
-              'PHP': 'php',
-              'C++': 'cpp',
-              'C#': 'csharp',
-              'Ruby': 'ruby',
+              'java': 'java',
+              'python': 'python',
+              'javascript': 'javascript',
+              'typeScript': 'typescript',
+              'go': 'go',
+              'php': 'php',
+              'c++': 'cpp',
+              'c#': 'csharp',
+              'ruby': 'ruby',
             };
             
             let mainLanguage = null;
@@ -41,11 +41,31 @@ jobs:
               }
             }
 
+            // 일반 규칙을 기본으로 설정합니다.
+            let configs = [];
+            
             if (mainLanguage) {
-              const semgrepLanguage = languageMap[mainLanguage];
+              const semgrepLanguage = languageMap[mainLanguage.toLowerCase()];
               if (semgrepLanguage) {
-                console.log(`주요 언어 '${mainLanguage}' 감지`);
+                // 주 언어가 감지되면, 해당 언어 규칙을 추가합니다.
+                configs.push(`semgrep_rules/semgrep_rules_general.yaml`);
+                configs.push(`semgrep_rules/semgrep_rules_${semgrepLanguage}.yaml`);
+                console.log(`주요 언어 '${mainLanguage}' 감지. 언어별 규칙을 추가합니다.`);
+              } else {
+                configs.push(`semgrep_rules/semgrep_rules.yaml`);
+                console.log(`감지된 언어 '${mainLanguage}'에 대한 특정 규칙 파일이 없습니다. 기본 규칙 파일을 사용합니다.`);
               }
             } else {
-              console.log('리포지토리의 언어를 감지하지 못했습니다.')
+              configs.push(`semgrep_rules/semgrep_rules.yaml`);
+              console.log('리포지토리의 언어를 감지하지 못했습니다. 기본 규칙 파일을 사용합니다.');
             }
+            
+            core.setOutput('config_files', configs.join(','));
+
+      - name: Copy specific Semgrep rule files
+        run: |
+          echo "필요한 규칙 파일 복사 완료: ${{ steps.set_config.outputs.config_files }}"
+          CONFIG_FILES=$(echo "${{ steps.set_config.outputs.config_files }}" | tr ',' '\n')
+          for FILE in $CONFIG_FILES; do
+            # cp "/opt/cache/semgrep/$(basename $FILE)" "$FILE"
+          done
