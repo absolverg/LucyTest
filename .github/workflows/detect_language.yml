@@ -19,9 +19,33 @@ jobs:
               repo: context.repo.repo,
             });
 
-            console.log("=== Repository Languages ===");
-            console.log(languages);
+            // Semgrep 규칙과 GitHub 언어 매핑
+            const languageMap = {
+              'Java': 'java',
+              'Python': 'python',
+              'JavaScript': 'javascript',
+              'TypeScript': 'typescript',
+              'Go': 'go',
+              'PHP': 'php',
+              'C++': 'cpp',
+              'C#': 'csharp',
+              'Ruby': 'ruby',
+            };
+            
+            let mainLanguage = null;
+            let maxBytes = 0;
+            for (const lang in languages) {
+              if (languages[lang] > maxBytes) {
+                maxBytes = languages[lang];
+                mainLanguage = lang;
+              }
+            }
 
-            // 키만 출력 (언어 이름들)
-            const langs = Object.keys(languages);
-            console.log("Languages detected:", langs.join(", "));
+            if (mainLanguage) {
+              const semgrepLanguage = languageMap[mainLanguage];
+              if (semgrepLanguage) {
+                console.log(`주요 언어 '${mainLanguage}' 감지`);
+              }
+            } else {
+              console.log('리포지토리의 언어를 감지하지 못했습니다.')
+            }
